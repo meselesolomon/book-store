@@ -2,6 +2,9 @@ import React, { useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { StyleSheet, View, Text, Image, TouchableOpacity } from "react-native";
 import { TextInput } from "react-native-web";
+import { Alert } from "react-native";
+
+import { auth, createUserWithEmailAndPassword } from "../firebase";
 
 const CreateAccountScreen = () => {
   const [firstname, setFristname] = useState("");
@@ -12,8 +15,31 @@ const CreateAccountScreen = () => {
   const [password2, setPassword2] = useState("");
 
   const Navigation = useNavigation();
-  const handleSignup = () => {
-    Navigation.replace("Home");
+  const handleSignup = async () => {
+    try {
+      // Check if email and password are not empty
+      if (email.trim() === "" || password.trim() === "") {
+        Alert.alert("Error", "Please fill in the email and password.");
+        console.log("Error", "Please fill in the email and password.");
+        return;
+      }
+      const userCredential = await createUserWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+      const { user } = userCredential;
+      if (user) {
+        // Navigate to the "Home" screen
+        Navigation.replace("Home");
+      } else {
+        // Display a generic error message
+        Alert.alert("An error occurred while creating the user account.");
+      }
+    } catch (error) {
+      console.error("Firebase sign up error");
+      Alert.alert("Error", error);
+    }
   };
 
   return (

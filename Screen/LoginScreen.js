@@ -2,20 +2,41 @@ import { useNavigation } from "@react-navigation/native";
 import React, { useState } from "react";
 import { StyleSheet, View, Text, Image, TouchableOpacity } from "react-native";
 import { TextInput } from "react-native-web";
+import { Alert } from "react-native";
+
+import { auth, signInWithEmailAndPassword } from "../firebase";
 
 const LoginScreen = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   const Navigation = useNavigation();
-  const handleSignup = () => {
+
+  const navigateToCreateAccount = () => {
     Navigation.navigate("CreateAccount");
   };
 
-  const handleLogin = () => {
-    console.log(email);
-    Navigation.replace("Home");
-    console.log(email);
+  const handleLogin = async () => {
+    try {
+      // Check if email and password are not empty
+      if (email.trim() === "" || password.trim() === "") {
+        Alert.alert("Error", "Please fill in the email and password.");
+        console.log("Error", "Please fill in the email and password.");
+        return;
+      }
+
+      // Sign in the user with email and password
+      const userCredential = await signInWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+      const { user } = userCredential;
+      Navigation.replace("Home");
+    } catch (error) {
+      console.error("Firebase login error");
+      Alert.alert("Error", error);
+    }
   };
 
   return (
@@ -41,7 +62,10 @@ const LoginScreen = () => {
           <TouchableOpacity onPress={handleLogin} style={styles.button}>
             <Text style={styles.button}>Log in</Text>
           </TouchableOpacity>
-          <TouchableOpacity onPress={handleSignup} style={styles.link}>
+          <TouchableOpacity
+            onPress={navigateToCreateAccount}
+            style={styles.link}
+          >
             <Text style={styles.link}>Create New Accoount</Text>
           </TouchableOpacity>
         </view>
