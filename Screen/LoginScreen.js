@@ -31,8 +31,10 @@ const LoginScreen = () => {
         email,
         password
       );
-      const { user } = userCredential;
-      Navigation.replace("Home");
+      const user = userCredential.user;
+      const userId = user.uid;
+      const firstName = "User";
+      Navigation.replace("Home", { firstName });
     } catch (error) {
       console.error("Firebase login error");
       Alert.alert("Error", error);

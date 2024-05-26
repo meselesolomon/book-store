@@ -4,15 +4,22 @@ import { StyleSheet, View, Text, Image, TouchableOpacity } from "react-native";
 import { TextInput } from "react-native-web";
 import { Alert } from "react-native";
 
-import { auth, createUserWithEmailAndPassword } from "../firebase";
+import {
+  auth,
+  createUserWithEmailAndPassword,
+  firebase,
+  collection,
+  addDoc,
+} from "../firebase";
 
 const CreateAccountScreen = () => {
-  const [firstname, setFristname] = useState("");
-  const [lastname, setLastname] = useState("");
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
-  const [phone, setPhone] = useState("");
+  const [phoneNumber, setPhoneNumber] = useState("");
   const [password, setPassword] = useState("");
-  const [password2, setPassword2] = useState("");
+  const [confrimPassword, setConfrimPassword] = useState("");
+  const [role, setRole] = useState("user");
 
   const Navigation = useNavigation();
   const handleSignup = async () => {
@@ -28,14 +35,18 @@ const CreateAccountScreen = () => {
         email,
         password
       );
-      const { user } = userCredential;
-      if (user) {
-        // Navigate to the "Home" screen
-        Navigation.replace("Home");
-      } else {
-        // Display a generic error message
-        Alert.alert("An error occurred while creating the user account.");
-      }
+      const user = userCredential.user;
+      const userId = user.uid;
+
+      const newUser = await addDoc(collection(firebase, "Users"), {
+        userId: userId,
+        role: role,
+        firstName: firstName,
+        lastName: lastName,
+        phoneNumber: phoneNumber,
+      });
+
+      Navigation.replace("Home", { firstName });
     } catch (error) {
       console.error("Firebase sign up error");
       Alert.alert("Error", error);
@@ -49,15 +60,15 @@ const CreateAccountScreen = () => {
       <View style={styles.inputContainer}>
         <TextInput
           placeholder="First Name"
-          value={firstname}
-          onChangeText={(text) => setFristname(text)}
-          style={styles.firstname}
+          value={firstName}
+          onChangeText={(text) => setFirstName(text)}
+          style={styles.firstName}
         />
         <TextInput
           placeholder="Last Name"
-          value={lastname}
-          onChangeText={(text) => setLastname(text)}
-          style={styles.lastname}
+          value={lastName}
+          onChangeText={(text) => setLastName(text)}
+          style={styles.lastName}
         />
         <TextInput
           placeholder="Email"
@@ -67,9 +78,9 @@ const CreateAccountScreen = () => {
         />
         <TextInput
           placeholder="Phone Number"
-          value={phone}
-          onChangeText={(text) => setPhone(text)}
-          style={styles.phone}
+          value={phoneNumber}
+          onChangeText={(text) => setPhoneNumber(text)}
+          style={styles.phoneNumber}
         />
         <TextInput
           placeholder="password"
@@ -80,9 +91,9 @@ const CreateAccountScreen = () => {
         />
         <TextInput
           placeholder="Confrim Password"
-          value={password2}
-          onChangeText={(text) => setPassword2(text)}
-          style={styles.password2}
+          value={confrimPassword}
+          onChangeText={(text) => setConfrimPassword(text)}
+          style={styles.confrimPassword}
           secureTextEntry
         />
         <view style={styles.buttonContoiner}>
@@ -103,9 +114,9 @@ const styles = StyleSheet.create({
     paddingTop: 20,
   },
   image: {
-    width: 300,
+    width: "100%",
     height: 150,
-    paddingTop: "20",
+    paddingTop: 20,
     justifyContent: "top",
   },
 
@@ -122,7 +133,7 @@ const styles = StyleSheet.create({
   inputContainer: {
     width: "80%",
   },
-  firstname: {
+  firstName: {
     justifyContent: "center",
     textAlign: "center",
     backgroundColor: "#ffffff",
@@ -131,7 +142,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     marginTop: 5,
   },
-  lastname: {
+  lastName: {
     justifyContent: "center",
     textAlign: "center",
     backgroundColor: "#ffffff",
@@ -149,7 +160,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     marginTop: 5,
   },
-  phone: {
+  phoneNumber: {
     justifyContent: "center",
     textAlign: "center",
     backgroundColor: "#ffffff",
@@ -167,7 +178,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     marginTop: 5,
   },
-  password2: {
+  confrimPassword: {
     justifyContent: "center",
     textAlign: "center",
     backgroundColor: "#ffffff",
