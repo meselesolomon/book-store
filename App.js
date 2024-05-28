@@ -4,20 +4,21 @@ import { StyleSheet, Text, View } from "react-native";
 
 import LoginScreen from "./Screen/LoginScreen";
 import CreatAccountScreen from "./Screen/CreateAccountScreen";
-import HomeScreen from "./Screen/HomeScreen";
+import AdminHomeScreen from "./Screen/AdminHomeScreen";
+import UserHomeScreen from "./Screen/UserHomeScreen";
+import AddBookScreen from "./Screen/AddBookScreen";
 
 const Stack = createNativeStackNavigator();
 
 export default function App() {
   return (
     <NavigationContainer>
-      <Stack.Navigator
-        headerMode="screen"
-        screenOptions={{ headerShown: false }}
-      >
+      <Stack.Navigator screenOptions={{ headerShown: false }}>
         <Stack.Screen name="Login" component={LoginScreen} />
         <Stack.Screen name="CreateAccount" component={CreatAccountScreen} />
-        <Stack.Screen name="Home" component={HomeScreen} />
+        <Stack.Screen name="userHome" component={UserHomeScreen} />
+        <Stack.Screen name="AdminHome" component={AdminHomeScreen} />
+        <Stack.Screen name="AddBook" component={AddBookScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );
