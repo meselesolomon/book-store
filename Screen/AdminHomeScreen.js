@@ -1,18 +1,24 @@
 import { useNavigation } from "@react-navigation/native";
 import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
 import React from "react";
+import AddBookScreen from "./AddBookScreen";
 
 const AdminHomeScreen = ({ route }) => {
-  const { firstName } = route.params;
+  // const { firstName } = route.params;
 
   const navigation = useNavigation();
+
   const addBook = () => {
-    navigation.replace("AddBook");
+    navigation.navigate("AddBook");
   };
+
   return (
     <View style={styles.container}>
-      <Text style={styles.welcome}>Dashboard</Text>
-      <Text style={styles.welcomMessage}>Welcome, {firstName}</Text>
+      <View>
+        <Text style={styles.welcome}>Dashboard</Text>
+        {/* <Text style={styles.welcomMessage}>Welcome, {firstName}</Text> */}
+      </View>
+
       <TouchableOpacity onPress={addBook} style={styles.button2}>
         <Text style={styles.button2}>Add New Book</Text>
       </TouchableOpacity>
@@ -24,7 +30,7 @@ export default AdminHomeScreen;
 
 const styles = StyleSheet.create({
   container: {
-    // flex: 1,
+    flex: 1,
     padding: 30,
   },
   welcome: {
@@ -40,5 +46,11 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: "bold",
     padding: 15,
+  },
+  button2: {
+    // backgroundColor: "#0000FF",
+    padding: 10,
+    borderRadius: 5,
+    marginTop: 20,
   },
 });

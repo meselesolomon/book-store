@@ -4,7 +4,7 @@ import { StyleSheet, View, Text, TouchableOpacity } from "react-native";
 
 const HomeScreen = ({ route }) => {
   // const [names, setNames] = useState();
-  const { firstName } = route.params;
+  // const { firstName } = route.params;
 
   const navigation = useNavigation();
   const handleLogout = () => {
@@ -17,7 +17,7 @@ const HomeScreen = ({ route }) => {
   return (
     <View style={styles.container}>
       <Text style={styles.welcome}>Dashboard</Text>
-      <Text style={styles.welcomMessage}>Welcome, {firstName}</Text>
+      {/* <Text style={styles.welcomMessage}>Welcome, {firstName}</Text> */}
 
       <view style={styles.buttonContoiner2}>
         {/* <TouchableOpacity onPress={addBook} style={styles.button2}>

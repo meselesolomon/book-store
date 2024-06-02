@@ -63,9 +63,9 @@ const LoginScreen = () => {
 
           // Perform the navigation based on the user's role
           if (userRole === "user") {
-            navigation.replace("userHome", { firstName });
+            navigation.replace("UserDrawer", { firstName });
           } else if (userRole === "admin") {
-            navigation.replace("AdminHome", { firstName });
+            navigation.replace("AdminDrawer", { firstName });
           } else {
             console.log("Data is not Found!");
           }
@@ -109,7 +109,7 @@ const LoginScreen = () => {
           onChangeText={setUserRole}
           editable={false}
         />
-        <view style={styles.buttonContoiner}>
+        <View style={styles.buttonContoiner}>
           <TouchableOpacity onPress={handleLogin} style={styles.button}>
             <Text style={styles.button}>Log in</Text>
           </TouchableOpacity>
@@ -119,7 +119,7 @@ const LoginScreen = () => {
           >
             <Text style={styles.link}>Create New Accoount</Text>
           </TouchableOpacity>
-        </view>
+        </View>
       </View>
     </View>
   );
