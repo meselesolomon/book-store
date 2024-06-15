@@ -56,9 +56,9 @@ const CreateAccountScreen = () => {
       });
 
       if (userRole === "user") {
-        navigation.replace("userHome", { userRole });
+        navigation.replace("UserDrawer", { firstName });
       } else if (userRole === "admin") {
-        navigation.replace("AdminHome");
+        navigation.replace("AdminDrawer", { firstName });
       }
     } catch (error) {
       console.error("Firebase sign up error");

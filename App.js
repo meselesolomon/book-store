@@ -11,6 +11,7 @@ import UserHomeScreen from "./Screen/UserHomeScreen";
 import AddBookScreen from "./Screen/AddBookScreen";
 import SettingsScreen from "./Screen/SettingsScreen";
 import ViewBookScreen from "./Screen/ViewBookScreen";
+// import PDFViewerScreen from "./Screen/PDFViewerScreen";
 
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
@@ -25,21 +26,17 @@ export default function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator screenOptions={{ headerShown: false }}>
-        <Stack.Screen name="Login" component={LoginScreen} />
-        <Stack.Screen name="CreateAccount" component={CreatAccountScreen} />
+        {/* <Stack.Screen name="Login" component={LoginScreen} />
+        <Stack.Screen name="CreateAccount" component={CreatAccountScreen} /> */}
         <Stack.Screen name="AdminDrawer" component={AdminDrawerScreen} />
         <Stack.Screen name="UserDrawer" component={UserDrawerScreen} />
-        {/* <Stack.Screen name="Login" component={LoginScreen} />
-        <Stack.Screen name="CreateAccount" component={CreatAccountScreen} />
-        <Stack.Screen name="userHome" component={UserHomeScreen} />
-        <Stack.Screen name="AdminHome" component={AdminHomeScreen} />
-        <Stack.Screen name="AddBook" component={AddBookScreen} /> */}
+        {/* <Stack.Screen name="PDFViewer" component={PDFViewerScreen} /> */}
       </Stack.Navigator>
     </NavigationContainer>
   );
 }
 function AdminDrawerScreen({ route }) {
-  const { firstName } = route.params || {};
+  const { firstName } = route.params || "Gust";
   return (
     <Drawer.Navigator>
       <Drawer.Screen
@@ -89,7 +86,19 @@ function AdminTabScreen() {
 function UserDrawerScreen() {
   return (
     <Drawer.Navigator>
-      <Drawer.Screen name="UserHome" component={UserTabScreen} />
+      <Drawer.Screen
+        name="UserHome"
+        component={UserTabScreen}
+        options={{
+          drawerLabel: "Home",
+          headerTitle: `Welcome, ${firstName}!`,
+          // headerTitle: "Home",
+          drawerActiveBackgroundColor: "#aa18ea",
+          drawerActiveTintColor: "#fff",
+          drawerInactiveTintColor: "000",
+        }}
+      />
+      <Drawer.Screen />
       <Drawer.Screen name="ViewBook" component={AddBookScreen} />
       <Drawer.Screen name="Settings" component={SettingsScreen} />
     </Drawer.Navigator>

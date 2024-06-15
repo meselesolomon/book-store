@@ -2,6 +2,7 @@ import { useNavigation } from "@react-navigation/native";
 import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
 import React from "react";
 import AddBookScreen from "./AddBookScreen";
+import PDFBooksScreen from "./PDFBooksScreen";
 
 const AdminHomeScreen = ({ route }) => {
   // const { firstName } = route.params;
@@ -22,6 +23,8 @@ const AdminHomeScreen = ({ route }) => {
       <TouchableOpacity onPress={addBook} style={styles.button2}>
         <Text style={styles.button2}>Add New Book</Text>
       </TouchableOpacity>
+
+      <PDFBooksScreen />
     </View>
   );
 };
